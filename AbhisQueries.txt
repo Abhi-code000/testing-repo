@@ -1,0 +1,20 @@
+SELECT
+  wd.WorkerCode,
+  wd.WorkerName,
+  FORMAT(v.Date, 'yyyy-MM') AS AttendanceMonth,
+  COUNT(*) AS AttendanceDays,
+  wd.BaseSalary,
+  (wd.BaseSalary / 30.0) AS DailyRate,
+  ROUND((wd.BaseSalary / 30.0) * COUNT(*), 2) AS EarnedIncome
+FROM GSTtblWorkerDetails wd
+JOIN GSTtblVisitor v ON wd.WorkerCode = v.VisitorName
+JOIN GSTtblSubTypes st ON wd.SubTypeId = st.SubTypeId
+JOIN GSTtblTypes tt ON st.TypeId = tt.TypeId
+WHERE tt.TypeId = 17
+  AND v.VisitorName = 'WOR001' -- Replace or remove filter to include all
+GROUP BY
+  wd.WorkerCode,
+  wd.WorkerName,
+  wd.BaseSalary,
+  FORMAT(v.Date, 'yyyy-MM')
+ORDER BY AttendanceMonth;
