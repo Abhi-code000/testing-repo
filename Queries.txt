@@ -1,0 +1,65 @@
+  select GSTtblWorkerDetails.WorkerName , GSTtblSubTypes.SubTypeId , GSTtblBankDetails.IFSCCode,
+  GSTtblWorkerDetails.BaseSalary,GSTtblWorkerDetails.WorkerContactNo,GSTtblBankDetails.IFSCCode,
+  GSTtblBankDetails.UPIId,GSTtblWorkerDetails.BaseSalary
+  From GSTtblWorkerDetails
+  inner join 
+
+
+
+//second time
+  SELECT 
+  GSTtblWorkerDetails.WorkerName, 
+  GSTtblSubTypes.SubTypeId, 
+  GSTtblBankDetails.IFSCCode,
+  GSTtblWorkerDetails.BaseSalary,
+  GSTtblWorkerDetails.WorkerContactNo,
+  GSTtblBankDetails.UPIId
+FROM GSTtblWorkerDetails
+INNER JOIN GSTtblSubTypes 
+  ON GSTtblWorkerDetails.SubTypeId = GSTtblSubTypes.SubTypeId
+INNER JOIN GSTtblBankDetails 
+  ON GSTtblWorkerDetails.WorkerId = GSTtblBankDetails.WorkerId;
+
+
+//third time succesfull quey 
+SELECT
+ wd.WorkerName,
+    st.SubTypeName, 
+   
+    wd.WorkerContactNo,
+    wd.JoiningDate,
+    wd.RegisterDate,
+    wd.RegisterBy,
+    wd.ShiftTiming,
+    wd.Address,
+    wd.BaseSalary,
+    wd.Status,
+    bd.BankId,
+    bd.BankCode,
+    bd.AllCode,
+    bd.AccountTypeId,
+    bd.AddedDate,
+    bd.OpeningBalance,
+    bd.IFSCCode,
+    bd.UPIId,
+    bd.AccountNo,
+    bd.ISActive
+FROM GSTtblWorkerDetails wd
+INNER JOIN GSTtblBankDetails bd ON wd.WorkerCode = bd.AllCode
+INNER JOIN GSTtblSubTypes st ON wd.SubTypeId = st.SubTypeId;  -- ✅ Corrected
+
+
+//gives worker details 
+SELECT
+  wd.WorkerName,
+  st.SubTypeName AS Role,
+  tt.TypeName AS WorkType
+FROM GSTtblWorkerDetails wd
+JOIN GSTtblSubTypes st ON wd.SubTypeId = st.SubTypeId
+JOIN GSTtblTypes tt ON st.TypeId = tt.TypeId
+WHERE wd.WorkerName IN (
+  'Abhi sahil Pawar', 'Nisha yogesh Patil', 'Vishal shubham Oghale',
+  'Sumit Ramesh Mane', 'Raj Yashraj Kale', 'Vaibhav Sushant Patil',
+  'Mukesh Vijay Mohite', 'Ritesh Akshay Kale', 'Yogesh Arayn Patil',
+  'Sakshi Mohit Patil'
+);
